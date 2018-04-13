@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_main);
         menu = (HorizontalScrollMenuView) findViewById(R.id.menu);
         textView = (TextView) findViewById(R.id.text);
+        int i = 0;
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 9999);
         initMenu();
 
