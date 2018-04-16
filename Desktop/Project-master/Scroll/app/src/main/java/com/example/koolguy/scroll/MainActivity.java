@@ -65,16 +65,16 @@ public class MainActivity extends AppCompatActivity implements Check.Listener{
 
     }
     private void initMenu() {
-        menu.addItem("Transcation", R.drawable.ic_money);
+        menu.addItem("Transcation", R.drawable.ic_book);
         menu.addItem("Map", R.drawable.ic_map);
         menu.addItem("Account", R.drawable.ic_account);
-        menu.addItem("Support", R.drawable.ic_check);
+        menu.addItem("Support", R.drawable.ic_dictionary);
         menu.setOnHSMenuClickListener(new HorizontalScrollMenuView.OnHSMenuClickListener() {
             @Override
             public void onHSMClick(MenuItem menuItem, int position) {
                 switch (position) {
                     case 0:
-                        anotherFragment();
+                        anotherFragment(); //создать метод который вызывает справочник
                         break;
                     case 1:
                          map.makeMap(new ArrayList<LatLng>());break;
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements Check.Listener{
                         break;
                     case 3:
 
-                        anotherFragment();
+                        anotherFragment(); //Создать метод который вызывыет словарь
                         break;
                 }
 
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements Check.Listener{
 
     @Override
     public void click() {
-       /* Log.e("is it","work");
+       Log.e("is it","work");
         ArrayList<LatLng>latLngs = new ArrayList<LatLng>();
         latLngs.add(new LatLng(47.277424, 39.707281));
         latLngs.add(new LatLng(47.213866, 39.711912));
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements Check.Listener{
         latLngs.add(new LatLng(47.221792, 39.723543));
         latLngs.add(new LatLng(47.225965, 39.746229));
         latLngs.add(new LatLng(47.226343, 39.739019));
-        map.makeMap(latLngs);*/
+        map.makeMap(latLngs);
        Toast.makeText(this,"Hello",Toast.LENGTH_SHORT).show();
     }
 }

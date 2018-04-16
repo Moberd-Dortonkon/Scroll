@@ -16,13 +16,9 @@ import android.widget.Button;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Check extends Fragment implements View.OnClickListener {
+public class Check extends Fragment {
    Button butt;
 
-    @Override
-    public void onClick(View view) {
-        list.click();
-    }
 
     static interface Listener
     {
@@ -46,7 +42,12 @@ public class Check extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_check, container, false);
         butt = view.findViewById(R.id.button2);
-        butt.setOnClickListener(this);
+        butt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                list.click();
+            }
+        });
         return inflater.inflate(R.layout.fragment_check, container, false);
     }
 
