@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,8 +25,10 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements Check.Listener{
     HorizontalScrollMenuView menu;
     TextView textView;
     MyMap map;
@@ -71,19 +74,16 @@ public class MainActivity extends AppCompatActivity {
             public void onHSMClick(MenuItem menuItem, int position) {
                 switch (position) {
                     case 0:
-                        map.saveCamera();
                         anotherFragment();
                         break;
                     case 1:
-                        map.saveCamera();
-                         map.makeMap();
-                        break;
+                         map.makeMap(new ArrayList<LatLng>());break;
                     case 2:
-                        map.saveCamera();
+
                         anotherFragment();
                         break;
                     case 3:
-                        map.saveCamera();
+
                         anotherFragment();
                         break;
                 }
@@ -94,8 +94,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
+    @Override
+    public void click() {
+       /* Log.e("is it","work");
+        ArrayList<LatLng>latLngs = new ArrayList<LatLng>();
+        latLngs.add(new LatLng(47.277424, 39.707281));
+        latLngs.add(new LatLng(47.213866, 39.711912));
+        latLngs.add(new LatLng(47.219229, 39.704359));
+        latLngs.add(new LatLng(47.221792, 39.723543));
+        latLngs.add(new LatLng(47.225965, 39.746229));
+        latLngs.add(new LatLng(47.226343, 39.739019));
+        map.makeMap(latLngs);*/
+       Toast.makeText(this,"Hello",Toast.LENGTH_SHORT).show();
+    }
 }

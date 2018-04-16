@@ -29,8 +29,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.internal.IGoogleMapDelegate;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class MyMap implements OnMapReadyCallback,LocationListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener {
     GoogleMap googleMap;
@@ -42,6 +46,7 @@ public class MyMap implements OnMapReadyCallback,LocationListener,GoogleApiClien
     CameraPosition saveCamera;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
+    MapFragment gmap;
 
     public MyMap(Activity activity, Context context) {
         this.activity = activity;
@@ -51,15 +56,28 @@ public class MyMap implements OnMapReadyCallback,LocationListener,GoogleApiClien
 
     }
 
-    public void makeMap() {
+    public void makeMap(ArrayList<LatLng> list) {
         if (googleServicesAvaliable()) {
-            MapFragment gmap = new MapFragment();
+             gmap = new MapFragment();
             ft = activity.getFragmentManager().beginTransaction();
             ft.replace(R.id.frames, gmap); //Единственное что не могу автоматизировать так это framelayout,его надо вручную ставить(((
             ft.addToBackStack(null);
             ft.commit();
             gmap.getMapAsync(this);
+            if(!list.isEmpty())doFlags(list);
         }
+    }
+
+
+    public void doFlags(ArrayList<LatLng> list)
+    {
+     for(LatLng lng:list)
+     {
+         MarkerOptions mp = new MarkerOptions().draggable(false).position(lng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_flag));
+         googleMap.addMarker(mp);
+
+     }
+
     }
 
     public boolean googleServicesAvaliable() {
@@ -93,6 +111,8 @@ public class MyMap implements OnMapReadyCallback,LocationListener,GoogleApiClien
 
     }
 
+
+
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(context)
                 .addConnectionCallbacks(this)
@@ -108,6 +128,7 @@ public class MyMap implements OnMapReadyCallback,LocationListener,GoogleApiClien
             LatLng lng = new LatLng(location.getLatitude(), location.getLongitude());
 
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(lng));
+            googleMap. moveCamera(CameraUpdateFactory.zoomTo(12));
 
         }
 
