@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,10 +25,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity {
     HorizontalScrollMenuView menu;
     TextView textView;
-    GoogleMap map;
+    MyMap map;
     CameraPosition saveCamera;
 
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         menu = (HorizontalScrollMenuView) findViewById(R.id.menu);
         textView = (TextView) findViewById(R.id.text);
         int i = 0;
+         map = new MyMap(this,this);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 9999);
         initMenu();
 
@@ -46,18 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    private void makeMap() {
-        if (googleServicesAvaliable()) {
-            MapFragment mapFragment = new MapFragment();
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.frames, mapFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-            mapFragment.getMapAsync(this);
 
-        }
-
-    }
 
     private void mateToast(int position) {
         Toast.makeText(this, "" + position, Toast.LENGTH_SHORT).show();
@@ -81,19 +72,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onHSMClick(MenuItem menuItem, int position) {
                 switch (position) {
                     case 0:
-                        saveCamera();
+                        map.saveCamera();
                         anotherFragment();
                         break;
                     case 1:
-                        saveCamera();
-                        makeMap();
+                        map.saveCamera();
+                         map.makeMap();
                         break;
                     case 2:
-                        saveCamera();
+                        map.saveCamera();
                         anotherFragment();
                         break;
                     case 3:
-                        saveCamera();
+                        map.saveCamera();
                         anotherFragment();
                         break;
                 }
@@ -103,48 +94,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    public boolean googleServicesAvaliable() {
-        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
-        int isAvailable = api.isGooglePlayServicesAvailable(this);
-        if (isAvailable == ConnectionResult.SUCCESS) {
-            return true;
-        } else if (api.isUserResolvableError(isAvailable)) {
-            Dialog dialog = api.getErrorDialog(this, isAvailable, 0);
-            dialog.show();
-        } else {
-            Toast.makeText(this, "can.t coonect", Toast.LENGTH_LONG).show();
-        }
-        return false;
-    }
-    private void setSaveCamera()
-    {
-        map.moveCamera(CameraUpdateFactory.newCameraPosition(saveCamera));
-    }
-    private void saveCamera()
-    {
-        if(map!=null) saveCamera = map.getCameraPosition();
-    }
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        }
-        map.setMyLocationEnabled(true);
-        if(saveCamera!=null)setSaveCamera();
 
-        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
-                map.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_flag))
-                        .draggable(true)
 
-                );
-            }
-        });
-    }
+
 
 
 }

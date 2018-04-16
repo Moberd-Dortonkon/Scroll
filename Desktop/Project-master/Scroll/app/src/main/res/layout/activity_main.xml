@@ -8,10 +8,10 @@
     tools:context="com.example.koolguy.scroll.MainActivity">
 
     <FrameLayout
-    android:id="@+id/frames"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-        android:layout_weight="2"/>
+        android:id="@+id/frames"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2" />
 
         <com.darwindeveloper.horizontalscrollmenulibrary.custom_views.HorizontalScrollMenuView
             android:id="@+id/menu"
